@@ -21,6 +21,7 @@ class TestPostfixCreation(unittest.TestCase):
         expr = '1&((0|1)&(1|0))'
         self.assertEqual(create_postfix(expr), '101|10|&&')
 
+
 class TestVariableCreation(unittest.TestCase):
     def test_single_variable(self):
         expr = 'a'
@@ -91,10 +92,6 @@ class TestReplaceVariables(unittest.TestCase):
         truth_values = {'a': 1, 'b': 0}
         output = replace_variables(string, truth_values)
         self.assertEqual(output, '1|0')
-
-
-
-
 
 
 if __name__ == '__main__':
