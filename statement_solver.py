@@ -9,13 +9,13 @@ PARENTHESES = ['(', ')']
 def check_tautology(input_string):
     is_tautology = True
     input_string = input_string.replace(" ", "")
-    variables = get_variables(input_string)
-    input_combos = truth_combos(variables, input_string)
-    for truth_values in input_combos:
-        valued_statement = replace_variables(input_string, truth_values)
-        new_statement = replace_negation(valued_statement)
-        postfix_expression = create_postfix(new_statement)
-        result = evaluate_postfix(postfix_expression)
+    variables = get_variables(input_string)  # get list of distinct variables in string
+    input_combos = truth_combos(variables, input_string)  # generate all possible input combinations
+    for truth_values in input_combos:  # iterate over all input combinations
+        valued_statement = replace_variables(input_string, truth_values)  # replace variables with their corresponding truth values
+        new_statement = replace_negation(valued_statement)  # Replace all the negation operators directly
+        postfix_expression = create_postfix(new_statement)  # create a postfix expresion
+        result = evaluate_postfix(postfix_expression)   # Evaluate postfix
         if result != 1:
             is_tautology = False
             break
@@ -33,7 +33,7 @@ def get_variables(input_string):
 def truth_combos(variables, statement):
     combo_list = []
     for booleans in itertools.product([True, False], repeat=len(variables)):
-        int_bool = [int(x) for x in booleans]  # Replace True with 1, False with 0
+        int_bool = [int(x) for x in booleans]
         combo_list.append(dict(zip(variables, int_bool)))
     return combo_list
 
@@ -53,6 +53,14 @@ def replace_negation(string):
 
 
 def create_postfix(string):
+    '''function to convert infix expression into postfix
+        if incoming letter is an operand put it in postfix expression
+        if incoming letter is left parentheses push into stack
+        if incoming letter is right parentheses, pop from stack one by one and add to postfix expression till
+        you reach left parentheses. Discard both left and right parentheses
+        if incoming letter is an operator push onto stack
+        We don't have to worry about operator precedence because of assumptions in question
+    '''
     expression_stack = Stack()
     expression_stack.push('(')
     string += ')'
@@ -77,6 +85,12 @@ def create_postfix(string):
 
 
 def evaluate_postfix(string):
+    '''function to evaluate a valid postfix expression
+        if incoming symbol is an operand, push to stack
+        if incoming symbol is an operator, pop twice from stack
+        apply the operator, push result back to stack
+        return top of stack
+    '''
     result_stack = Stack()
     for symbol in string:
         if symbol in ['0', '1']:
