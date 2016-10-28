@@ -6,7 +6,7 @@ def check_tautology(input_string):
     is_tautology = True
     input_string = input_string.replace(" ", "")
     variables = get_variables(input_string)  # get list of distinct variables in string
-    input_combos = truth_combos(variables, input_string)  # generate all possible input combinations
+    input_combos = truth_combos(variables)  # generate all possible input combinations
     for truth_values in input_combos:  # iterate over all input combinations
         valued_statement = replace_variables(input_string, truth_values)  # replace variables with their corresponding truth values
         new_statement = replace_negation(valued_statement)  # Replace all the negation operators directly

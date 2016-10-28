@@ -11,10 +11,12 @@ def get_variables(input_string):
     for letter in input_string:
         if letter not in OPERATORS and letter not in PARENTHESES:
             variables.add(letter)
-    return list(variables)
+    variables = list(variables)
+    variables.sort()
+    return variables
 
 
-def truth_combos(variables, statement):
+def truth_combos(variables):
     combo_list = []
     for booleans in itertools.product([True, False], repeat=len(variables)):
         int_bool = [int(x) for x in booleans]
