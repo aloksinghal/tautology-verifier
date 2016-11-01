@@ -1,4 +1,4 @@
-from statement_parser import check_tautology
+from statement_solver import check_tautology
 
 
 def main():
